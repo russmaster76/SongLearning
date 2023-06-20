@@ -1,25 +1,13 @@
 import lyricsgenius as lg
 
-
-file = open("/Users/russ/Desktop/lyrics_1.txt", "w")  # File to write lyrics to
-genius = lg.Genius('h3DHLVgmdDgLzNvSAEa602VcnqfNC7akNaXOs1TLErJL2beimrlHIOCCnY2QNpMn',  # Client access token from Genius Client API page
+def searchSong():
+    genius = genius = lg.Genius('h3DHLVgmdDgLzNvSAEa602VcnqfNC7akNaXOs1TLErJL2beimrlHIOCCnY2QNpMn',  # Client access token from Genius Client API page
                              skip_non_songs=True, excluded_terms=["(Remix)", "(Live)"],
                              remove_section_headers=True)
+    song = genius.search_songs("明日も", 3)
+    print("Artist: " + song['hits'][0]['result']['artist_names'] + " || Song: " + song['hits'][0]['result']['title'])
+    print("Artist: " + song['hits'][1]['result']['artist_names'] + " || Song: " + song['hits'][1]['result']['title'])
+    print("Artist: " + song['hits'][2]['result']['artist_names'] + " || Song: " + song['hits'][2]['result']['title'])
 
-artists = ['Logic', 'Rihanna', 'Frank Sinatra']
-
-
-def get_lyrics(arr, k):  # Write lyrics of k songs by each artist in arr
-    c = 0  # Counter
-    for name in arr:
-        try:
-            songs = (genius.search_artist(name, max_songs=k, sort='popularity')).songs
-            s = [song.lyrics for song in songs]
-            file.write("\n \n   <|endoftext|>   \n \n".join(s))  # Deliminator
-            c += 1
-            print(f"Songs grabbed:{len(s)}")
-        except:  #  Broad catch which will give us the name of artist and song that threw the exception
-            print(f"some exception at {name}: {c}")
-
-
-get_lyrics(artists, 3)
+if __name__ == "__main__":
+    song = searchSong()
