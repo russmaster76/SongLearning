@@ -1,9 +1,10 @@
 import lyricsgenius as lg
 
-def searchSong(songTitle):
-    genius = genius = lg.Genius('h3DHLVgmdDgLzNvSAEa602VcnqfNC7akNaXOs1TLErJL2beimrlHIOCCnY2QNpMn',  # Client access token from Genius Client API page
+genius = lg.Genius('h3DHLVgmdDgLzNvSAEa602VcnqfNC7akNaXOs1TLErJL2beimrlHIOCCnY2QNpMn',  # Client access token from Genius Client API page
                              skip_non_songs=True, excluded_terms=["(Remix)", "(Live)"],
                              remove_section_headers=True)
+
+def searchSong(songTitle):
     if len(songTitle) == 0:
         songTitle = "明日も"
     searchResults = genius.search_songs(songTitle, 9)
@@ -11,7 +12,7 @@ def searchSong(songTitle):
 
 def selectSong(searchResults):
     i: int = 0
-    while i < 10 and i < len(song['hits'][0]) + 1:
+    while i < 10 and i < len(searchResults['hits'][0]) + 1:
         print(str(i + 1) + ". Artist: " + searchResults['hits'][i]['result']['artist_names'] + " || Song: " + 
               searchResults['hits'][i]['result']['title'])
         i += 1
@@ -22,6 +23,7 @@ def selectSong(searchResults):
             chosenSong = searchResults['hits'][int(foundSongResponse) - 1]['result']['title']
             chosenSongArtist = searchResults['hits'][int(foundSongResponse) - 1]['result']['artist_names']
             print("Your song is " + chosenSong + " by " + chosenSongArtist)
+            return(searchResults['hits'][int(foundSongResponse) - 1]['result'])
         except:
                 print("That was an invalid response, Please select a song by typing its number or typing No")
                 selectSong(searchResults)
@@ -34,8 +36,15 @@ def selectSong(searchResults):
         print("That was an invalid response, Please select a song by typing its number or typing No")
         selectSong(searchResults)
 
+def getLyrics(songData):
+    lyrics = genius.lyrics(song_url=songData["url"])
+    print(type(lyrics))
+    print(lyrics)
+    
+
     
 
 if __name__ == "__main__":
-    song = searchSong("")
-    selectSong(song)
+    searchResults = searchSong("")
+    chosenSong = selectSong(searchResults)
+    getLyrics(chosenSong)
