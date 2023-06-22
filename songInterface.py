@@ -11,26 +11,28 @@ def searchSong(songTitle):
 
 def selectSong(searchResults):
     i: int = 0
-    while i < 10 and i < len(song['hits'][i]):
+    while i < 10 and i < len(song['hits'][0]) + 1:
         print(str(i + 1) + ". Artist: " + searchResults['hits'][i]['result']['artist_names'] + " || Song: " + 
               searchResults['hits'][i]['result']['title'])
         i += 1
     print("Do You See Your Desired Song? If Yes, Input its respective number, if not type no")
     foundSongResponse = input()
-    if(foundSongResponse.isdigit() == True and foundSongResponse > int(0)):
+    if(foundSongResponse.isdigit() == True and int(foundSongResponse) > 0):
         try:
             chosenSong = searchResults['hits'][int(foundSongResponse) - 1]['result']['title']
-            print("Your song is " + chosenSong)
+            chosenSongArtist = searchResults['hits'][int(foundSongResponse) - 1]['result']['artist_names']
+            print("Your song is " + chosenSong + " by " + chosenSongArtist)
         except:
-            print("Not Valid")
-    elif(foundSongResponse.lower()== "no" or foundSongResponse == "N"):
+                print("That was an invalid response, Please select a song by typing its number or typing No")
+                selectSong(searchResults)
+    elif(foundSongResponse.lower()== "no" or foundSongResponse.lower() == "N"):
         print("Please Reenter the Song to Search again, Including the artist can help narrow down search results.")
         newSearchTerm = input()
         newSearchResults = searchSong(newSearchTerm)
         selectSong(newSearchResults)
     else:
-        print("Invalid Response")
-    
+        print("That was an invalid response, Please select a song by typing its number or typing No")
+        selectSong(searchResults)
 
     
 
