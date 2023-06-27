@@ -1,8 +1,11 @@
 import lyricsgenius as lg
+from janome.tokenizer import Tokenizer
 
 genius = lg.Genius('h3DHLVgmdDgLzNvSAEa602VcnqfNC7akNaXOs1TLErJL2beimrlHIOCCnY2QNpMn',  # Client access token from Genius Client API page
                              skip_non_songs=True, excluded_terms=["(Remix)", "(Live)"],
                              remove_section_headers=True)
+
+t = Tokenizer()
 
 def searchSong(songTitle):
     if len(songTitle) == 0:
@@ -27,7 +30,7 @@ def selectSong(searchResults):
         except:
                 print("That was an invalid response, Please select a song by typing its number or typing No")
                 selectSong(searchResults)
-    elif(foundSongResponse.lower()== "no" or foundSongResponse.lower() == "N"):
+    elif(foundSongResponse.lower()== "no" or foundSongResponse.lower() == "n"):
         print("Please Reenter the Song to Search again, Including the artist can help narrow down search results.")
         newSearchTerm = input()
         newSearchResults = searchSong(newSearchTerm)
@@ -37,14 +40,20 @@ def selectSong(searchResults):
         selectSong(searchResults)
 
 def getLyrics(songData):
+    print(songData)
     lyrics = genius.lyrics(song_url=songData["url"])
     print(type(lyrics))
     print(lyrics)
-    
+    return lyrics
+
+def tokenizeLyrics(lyrics):
+    for token in t.tokenize(lyrics):
+        print(token)
 
     
 
 if __name__ == "__main__":
     searchResults = searchSong("")
     chosenSong = selectSong(searchResults)
-    getLyrics(chosenSong)
+    lyrics = getLyrics(chosenSong)
+    tokenizeLyrics(lyrics)
