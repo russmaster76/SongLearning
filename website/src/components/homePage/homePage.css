@@ -1,0 +1,11 @@
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Adjust the margin as per your requirement */
+}
+  
+  .search-input {
+    width: 300px; /* Adjust the width as per your requirement */
+    padding: 10px;
+}
