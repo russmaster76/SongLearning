@@ -1,11 +1,10 @@
 import './App.css';
-import homePage from 'C:/Users/Russ/Desktop/Local_Repos/SongLearning/website/src/components/homePage/homePage.js';
-
+import HomePage from './components/HomePage/HomePage';
 
 function App() {
   return (
     <div>
-      <homePage />
+      <HomePage />
     </div>
   );
 }

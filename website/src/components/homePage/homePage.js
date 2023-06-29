@@ -1,11 +1,14 @@
-import './homePage.css'
+import './HomePage.css'
 
-function homePage() {
+function HomePage() {
     return (
-    <div>
-    heysfsadfsadfasdf
+    <div className="app">
+        <div className="search-bar-container">
+          <input type="text" className="search-input" placeholder="Search" />
+        </div>
+        {/* Other components and content */}
     </div>
     );
 }
 
-export default homePage;
+export default HomePage;
