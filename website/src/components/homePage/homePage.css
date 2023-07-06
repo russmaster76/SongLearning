@@ -5,7 +5,17 @@
     margin-top: 20px; /* Adjust the margin as per your requirement */
 }
   
-  .search-input {
+.search-input {
     width: 300px; /* Adjust the width as per your requirement */
     padding: 10px;
+}
+
+.headerTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchButton {
+  height: 40px;
 }
