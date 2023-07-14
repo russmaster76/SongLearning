@@ -1,7 +1,10 @@
 import './HomePage.css'
 import axios from 'axios'
+import react, {useState} from 'react'
 
 function HomePage() {
+  
+  const [data, setData] = useState([{}])
   var  searchBarContent = ""
 
   function onSearchBarChange(e) {
@@ -10,11 +13,8 @@ function HomePage() {
     console.log(e.target.value)
   }
 
-  function onSearchButtonClick(e) {
-    console.log(searchBarContent)
-  }
-
   function searchSongs() {
+    console.log(searchBarContent)
     let queryObj = {
       searchQuery: searchBarContent
     }
@@ -22,9 +22,11 @@ function HomePage() {
     axios.post('http://127.0.0.1:5000/search', queryObj)
     .then(
       response => response.data
-    )
-    .then(
-      
+    ).then(
+      helper => {
+        setData(helper)
+        console.log(helper)
+      }
     )
   }
   return (
@@ -33,7 +35,7 @@ function HomePage() {
         <div className="search-bar-container">
           <input type="text" className="search-input" 
           placeholder="Enter Song Title Here" id="searchBar" onChange={onSearchBarChange}/>
-          <button className="searchButton" onClick={onSearchButtonClick}>Search</button>
+          <button className="searchButton" onClick={searchSongs}>Search</button>
         </div>
         {/* Other components and content */}
     </div>
